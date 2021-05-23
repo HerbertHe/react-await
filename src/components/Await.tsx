@@ -1,7 +1,7 @@
-import React, { Children, Fragment, ReactNodeArray } from "react"
+import React, { Fragment, ReactNodeArray } from "react"
 
 interface IAwaitProps {
-    promise: Promise<any>
+    promise: Promise<any> | undefined
 }
 
 interface IAwaitStates {
@@ -116,7 +116,7 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
             for (let i = 0; i < children.length; i++) {
                 const tmp = children[i] as any
                 if (!!tmp.type?.name && tmp.type?.name === "Then") {
-                    const props = {
+                    let props = {
                         key: "Then",
                         value: val,
                     }

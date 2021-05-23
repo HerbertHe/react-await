@@ -1,6 +1,6 @@
 import React, { ReactNodeArray } from "react";
 interface IAwaitProps {
-    promise: Promise<any>;
+    promise: Promise<any> | undefined;
 }
 interface IAwaitStates {
     hasError: boolean;

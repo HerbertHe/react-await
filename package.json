@@ -1,8 +1,14 @@
 {
   "name": "@herberthe/react-await",
+  "description": "Await Component for handling asynchronous data renderding for React",
   "version": "1.0.0",
   "main": "./lib/index.js",
   "license": "MIT",
+  "author": "HerbertHe<Herbert.He0229@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HerbertHe/react-await.git"
+  },
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
@@ -10,8 +16,14 @@
     "dev:js": "rollup -c -w",
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "rollup -c"
+    "build:js": "rollup -c",
+    "pub": "yrm use npm && yarn build && npm publish"
   },
+  "keywords": [
+    "React",
+    "Await",
+    "Component"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
