@@ -17,7 +17,7 @@ export default {
         commonjs(),
 
         // Compile TypeScript/JavaScript files
-        babel({ extensions, include: ["src/**/*"], babelHelpers: "bundled" }),
+        babel({ extensions, include: ["src/**/*"], babelHelpers: "runtime" }),
     ],
 
     output: [

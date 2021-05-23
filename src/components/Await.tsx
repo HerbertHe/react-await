@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNodeArray } from "react"
+import React, { Children, Fragment, ReactNodeArray } from "react"
 
 interface IAwaitProps {
     promise: Promise<any>
@@ -33,32 +33,8 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
     }
 
     componentDidMount() {
-        const { promise, children } = this.props
-        let val: any
-        let err: any
-
-        // 拿不到promise的情况
-        console.log(promise)
-
-        if (!!promise) {
-            // promise应该在此执行才对。。。
-            console.log(promise)
-            promise
-                .then((data) => {
-                    val = data
-                    this.setState({
-                        status: "resolve",
-                    })
-                })
-                .catch((error) => {
-                    err = error
-                    this.setState({
-                        status: "reject",
-                    })
-                })
-        }
-
         // handle string
+        const { children } = this.props
         if (typeof children === "string") {
             this.setState({
                 pendingChild: children,
@@ -67,8 +43,6 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
 
         if (children instanceof Array) {
             let _pendingChild: ReactNodeArray = []
-            let _resolveChild: ReactNodeArray = []
-            let _rejectChild: ReactNodeArray = []
 
             // Error if "Then" component is not existed!
             const ifThen = children.filter(
@@ -92,17 +66,76 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
                 }
 
                 if (!!tmp.type?.name && tmp.type?.name === "Then") {
+                    flagThen = true
+                    this.setState({
+                        pendingChild: _pendingChild,
+                    })
+                    break
+                }
+            }
+        }
+    }
+
+    componentDidUpdate() {
+        const { promise, children } = this.props
+        if (!promise) return
+        if (!!promise) {
+            promise
+                .then((data: any) => {
+                    this.updateResolveChild(children, data)
+                    this.setState({
+                        status: "resolve",
+                    })
+                })
+                .catch((error: any) => {
+                    this.updateRejectChild(children, error)
+                    this.setState({
+                        status: "reject",
+                    })
+                })
+        }
+    }
+
+    shouldComponentUpdate(
+        nextProps: IAwaitProps,
+        nextStates: IAwaitStates
+    ): boolean {
+        if (
+            this.state.status === "pending" ||
+            nextStates.status !== this.state.status
+        ) {
+            return true
+        }
+        return false
+    }
+
+    updateResolveChild = (children: any, val: any) => {
+        if (children instanceof Array) {
+            let _resolveChild: ReactNodeArray = []
+
+            for (let i = 0; i < children.length; i++) {
+                const tmp = children[i] as any
+                if (!!tmp.type?.name && tmp.type?.name === "Then") {
                     const props = {
                         key: "Then",
                         value: val,
                     }
                     _resolveChild = [React.cloneElement(tmp, { ...props })]
-                    flagThen = true
                     this.setState({
-                        pendingChild: _pendingChild,
                         resolveChild: _resolveChild,
                     })
+                    break
                 }
+            }
+        }
+    }
+
+    updateRejectChild = (children: any, err: any) => {
+        if (children instanceof Array) {
+            let _rejectChild: ReactNodeArray = []
+
+            for (let i = 0; i < children.length; i++) {
+                const tmp = children[i] as any
 
                 if (!!tmp.type?.name && tmp.type?.name === "Catch") {
                     const props = {
@@ -114,6 +147,7 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
                     this.setState({
                         rejectChild: _rejectChild,
                     })
+                    break
                 }
             }
         }
@@ -128,9 +162,6 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
                 {status === "pending" && pendingChild}
                 {status === "resolve" && resolveChild}
                 {status === "reject" && rejectChild}
-                {/* 处理this.props.children等于零的情况 */}
-                {/* 处理Then嵌套的情况 */}
-                {/* 处理Catch嵌套的情况 */}
             </Fragment>
         )
     }

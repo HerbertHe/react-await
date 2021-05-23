@@ -1,3 +1,3 @@
-export { default as Await } from "./components/Await";
-export { default as Catch } from "./components/Catch";
-export { default as Then } from "./components/Then";
+export { Await } from "./components/Await";
+export { Catch } from "./components/Catch";
+export { Then } from "./components/Then";
