@@ -1,35 +1,25 @@
-import React, { Fragment, ReactNodeArray } from "react"
+import React, { ErrorInfo, ReactNode, ReactNodeArray } from "react"
 
 interface IAwaitProps {
     promise: Promise<any> | undefined
 }
 
 interface IAwaitStates {
-    hasError: boolean
     status: "pending" | "resolve" | "reject"
-    pendingChild: ReactNodeArray | string
-    resolveChild: ReactNodeArray | string
-    rejectChild: ReactNodeArray | string
+    pendingChild: ReactNodeArray | ReactNode | string
+    resolveChild: ReactNodeArray | ReactNode | string
+    rejectChild: ReactNodeArray | ReactNode | string
 }
 
 export class Await extends React.Component<IAwaitProps, IAwaitStates> {
     constructor(props: IAwaitProps) {
         super(props)
         this.state = {
-            hasError: false,
             pendingChild: [],
             resolveChild: [],
             rejectChild: [],
             status: "pending",
         } as IAwaitStates
-    }
-
-    static getDerivedStateFromError(error: any) {
-        return { hasError: true }
-    }
-
-    componentDidCatch(error: any, info: any) {
-        // catch error
     }
 
     componentDidMount() {
@@ -55,18 +45,13 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
                 )
             }
 
-            let flagThen: boolean = false
             for (let i = 0; i < children.length; i++) {
                 const tmp = children[i] as any
-                if (
-                    !flagThen &&
-                    (typeof tmp === "string" || typeof tmp.type === "string")
-                ) {
+                if (typeof tmp === "string" || typeof tmp.type === "string") {
                     _pendingChild.push(tmp)
                 }
 
                 if (!!tmp.type?.name && tmp.type?.name === "Then") {
-                    flagThen = true
                     this.setState({
                         pendingChild: _pendingChild,
                     })
@@ -118,7 +103,7 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
                 if (!!tmp.type?.name && tmp.type?.name === "Then") {
                     let props = {
                         key: "Then",
-                        value: val,
+                        awaitvalue: val,
                     }
                     _resolveChild = [React.cloneElement(tmp, { ...props })]
                     this.setState({
@@ -140,7 +125,7 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
                 if (!!tmp.type?.name && tmp.type?.name === "Catch") {
                     const props = {
                         key: "Catch",
-                        error: err,
+                        awaiterror: err,
                     }
                     _rejectChild = [React.cloneElement(tmp, { ...props })]
 
@@ -154,15 +139,19 @@ export class Await extends React.Component<IAwaitProps, IAwaitStates> {
     }
 
     render() {
-        const { status, pendingChild, resolveChild, rejectChild, hasError } =
-            this.state
-        return (
-            <Fragment>
-                {hasError && <div>Error occured!!</div>}
-                {status === "pending" && pendingChild}
-                {status === "resolve" && resolveChild}
-                {status === "reject" && rejectChild}
-            </Fragment>
-        )
+        const { status, pendingChild, resolveChild, rejectChild } = this.state
+        switch (status) {
+            case "pending": {
+                return pendingChild
+            }
+
+            case "resolve": {
+                return resolveChild
+            }
+
+            case "reject": {
+                return rejectChild
+            }
+        }
     }
 }

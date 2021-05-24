@@ -1,7 +1,7 @@
 {
   "name": "@herberthe/react-await",
   "description": "Await Component for handling asynchronous data renderding for React",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib/index.js",
   "license": "MIT",
   "author": "HerbertHe<Herbert.He0229@gmail.com>",
@@ -12,7 +12,7 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "dev": "npm run dev:js && npm run build:types",
+    "dev": "npm run build:types && npm run dev:js",
     "dev:js": "rollup -c -w",
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",

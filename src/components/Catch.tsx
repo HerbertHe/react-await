@@ -1,7 +1,7 @@
 import React, { Fragment, ReactNode, ReactNodeArray } from "react"
 
 interface ICatchProps {
-    error?: any
+    awaiterror?: any
 }
 
 interface ICatchStates {
@@ -17,7 +17,7 @@ export class Catch extends React.Component<ICatchProps, ICatchStates> {
     }
 
     componentDidMount() {
-        const { error, children } = this.props
+        const { awaiterror, children } = this.props
         if (typeof children === "string") {
             this.setState({
                 children,
@@ -31,7 +31,7 @@ export class Catch extends React.Component<ICatchProps, ICatchStates> {
                 const tmp = children[i] as any
                 if (!!tmp.type) {
                     let props = {
-                        error,
+                        awaiterror,
                     }
                     const child = React.cloneElement(tmp, { ...props })
                     _children.push(child)
@@ -46,7 +46,7 @@ export class Catch extends React.Component<ICatchProps, ICatchStates> {
         if (typeof children === "object") {
             const tmp = children as any
             let props = {
-                error,
+                awaiterror,
             }
             const child = React.cloneElement(tmp, { ...props })
             this.setState({

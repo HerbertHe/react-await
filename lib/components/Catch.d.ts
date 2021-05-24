@@ -1,6 +1,6 @@
 import React, { ReactNode, ReactNodeArray } from "react";
 interface ICatchProps {
-    error?: any;
+    awaiterror?: any;
 }
 interface ICatchStates {
     children: ReactNodeArray | ReactNode | string;

@@ -1,6 +1,6 @@
 import React, { ReactNode, ReactNodeArray } from "react";
 interface IThenProps {
-    value?: any;
+    awaitvalue?: any;
 }
 interface IThenStates {
     children: ReactNodeArray | ReactNode | string;

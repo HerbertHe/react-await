@@ -1,7 +1,7 @@
 import React, { Fragment, ReactNode, ReactNodeArray } from "react"
 
 interface IThenProps {
-    value?: any
+    awaitvalue?: any
 }
 
 interface IThenStates {
@@ -17,7 +17,7 @@ export class Then extends React.Component<IThenProps, IThenStates> {
     }
 
     componentDidMount() {
-        const { value, children } = this.props
+        const { awaitvalue, children } = this.props
         if (typeof children === "string") {
             this.setState({
                 children,
@@ -31,7 +31,7 @@ export class Then extends React.Component<IThenProps, IThenStates> {
                 const tmp = children[i] as any
                 if (!!tmp.type) {
                     let props = {
-                        value,
+                        awaitvalue,
                     }
                     const child = React.cloneElement(tmp, { ...props })
                     _children.push(child)
@@ -46,7 +46,7 @@ export class Then extends React.Component<IThenProps, IThenStates> {
         if (typeof children === "object") {
             const tmp = children as any
             let props = {
-                value,
+                awaitvalue,
             }
             const child = React.cloneElement(tmp, { ...props })
             this.setState({

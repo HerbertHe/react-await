@@ -1,12 +1,12 @@
 # @herberthe/react-await
 
-A components library for the value of Promise rendering, inspired by [Svelte Await Blocks](https://svelte.dev/tutorial/await-blocks)
+一个根据Promise数据渲染的组件库, 灵感来源于[Svelte Await Blocks](https://svelte.dev/tutorial/await-blocks)
 
-> Most web applications have to deal with asynchronous data at some point. Svelte makes it easy to *await* the value of `promises` directly in your markup.
+> 大多的web应用程序需要在某些点处理异步数据。Svelte使用*await*标记promises的数据, 使这个过程更加简单
 
 [简体中文](./README.CN.md) | [English](./README.md)
 
-## Install
+## 安装依赖
 
 ```bash
 npm i @herberthe/react-await
@@ -14,7 +14,7 @@ npm i @herberthe/react-await
 yarn add @herberthe/react-await
 ```
 
-## Usage
+## 使用方法
 
 ```tsx
 import { FC, useEffect, useState } from "react"
@@ -32,12 +32,12 @@ const App: FC = () => {
     }, [])
     return (
         <Await promise={promise}>
-            {/* Here are code for pending */}
+            {/* 在此写入pending时的代码 */}
             <Then>
-                {/* Here are code for resolve */}
+                {/* 在此写入resolve时的代码 */}
             </Then>
             <Catch>
-                {/* Here are code for reject */}
+                {/* 在此写入reject时的代码 */}
             </Catch>
         </Await>
     )
@@ -46,13 +46,11 @@ const App: FC = () => {
 export default App
 ```
 
-> NOTICE: The Component `Then` can not be omitted! If you know that your promise can't reject, you can omit the component `Catch`
+> 需要注意的是, `Then`组件不可省略, 而`Catch`组件如果你知道promise不会reject的话, 可以省略。
 
-## Get the Value & Error
+## 获取数据和错误
 
-The library will inject `props.awaitvalue` and `props.awaiterror` respectively for the children of `Then` and `Catch`, and the depth is **1**, you can get the **Value** and **Error** via custom component
-
-Example here:
+本库以深度为**1**向`Then`和`Catch`的所有子组件(字符串类型除外)分别注入不同的props属性`props.awaitvalue`和`props.awaiterror`, 您可以通过自定义组件的方式拿到数据
 
 ```tsx
 interface ICustomResolveProps {
