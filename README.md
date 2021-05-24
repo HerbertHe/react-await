@@ -1,5 +1,10 @@
 # @herberthe/react-await
 
+[![version](https://img.shields.io/npm/v/@herberthe/react-await.svg)](https://www.npmjs.com/package/@herberthe/react-await)
+[![download](https://img.shields.io/npm/dm/@herberthe/react-await.svg)](https://www.npmjs.com/package/@herberthe/react-await)
+[![cnpmVersion](https://cnpmjs.org/badge/v/@herberthe/react-await.svg)](https://cnpmjs.org/package/@herberthe/react-await)
+[![cnpmDownload](https://cnpmjs.org/badge/d/@herberthe/react-await.svg)](https://cnpmjs.org/package/@herberthe/react-await)
+
 A components library for the value of Promise rendering, inspired by [Svelte Await Blocks](https://svelte.dev/tutorial/await-blocks)
 
 > Most web applications have to deal with asynchronous data at some point. Svelte makes it easy to *await* the value of `promises` directly in your markup.
@@ -50,7 +55,7 @@ export default App
 
 ## Get the Value & Error
 
-The library will inject `props.awaitvalue` and `props.awaiterror` respectively for the children of `Then` and `Catch`, and the depth is **1**, you can get the **Value** and **Error** via custom component
+The library will inject `props.awaitvalue` and `props.awaiterror` respectively for the children of `Then` and `Catch` (except the text dom), and the depth is **1**, you can get the **Value** and **Error** via custom component
 
 Example here:
 

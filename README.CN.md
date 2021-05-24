@@ -1,5 +1,10 @@
 # @herberthe/react-await
 
+[![version](https://img.shields.io/npm/v/@herberthe/react-await.svg)](https://www.npmjs.com/package/@herberthe/react-await)
+[![download](https://img.shields.io/npm/dm/@herberthe/react-await.svg)](https://www.npmjs.com/package/@herberthe/react-await)
+[![cnpmVersion](https://cnpmjs.org/badge/v/@herberthe/react-await.svg)](https://cnpmjs.org/package/@herberthe/react-await)
+[![cnpmDownload](https://cnpmjs.org/badge/d/@herberthe/react-await.svg)](https://cnpmjs.org/package/@herberthe/react-await)
+
 一个根据Promise数据渲染的组件库, 灵感来源于[Svelte Await Blocks](https://svelte.dev/tutorial/await-blocks)
 
 > 大多的web应用程序需要在某些点处理异步数据。Svelte使用*await*标记promises的数据, 使这个过程更加简单
